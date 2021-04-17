@@ -1,6 +1,6 @@
 const knex = require("../database/connection");
 const { generateJwtPayload } = require("../services/jwt-sign");
-const { isEmpty } = require("../services/is-empty");
+const { ok, badRequest } = require("../helpers/http");
 
 const loginController = () => {
   return {
@@ -18,13 +18,13 @@ const loginController = () => {
           throw Error("E-mail or Password incorrectly.");
         }
         const token = generateJwtPayload(dealer.id, dealer.email);
-        return res.json({
+        return ok(res, {
           name: dealer.name,
           email: dealer.email,
           token: token,
         });
       } catch (e) {
-        return res.status(400).json(e.message);
+        return badRequest(res, e.message);
       }
     },
   };

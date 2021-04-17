@@ -1,4 +1,5 @@
 const knex = require("../database/connection");
+const { ok } = require("../helpers/http");
 
 const dealerController = () => {
   return {
@@ -6,7 +7,7 @@ const dealerController = () => {
       const dealers = await knex("dealer")
         .select("name", "cpf", "email")
         .orderBy("name");
-      return res.json(dealers);
+      return ok(res, dealers);
     },
   };
 };
