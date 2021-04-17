@@ -5,6 +5,7 @@ const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const dealerRouter = require("./routes/dealer");
 const loginRouter = require("./routes/login");
+const { verifyJWT } = require("./middlewares/auth");
 
 const app = express();
 
@@ -15,7 +16,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/dealer", dealerRouter);
+app.use("/dealer", verifyJWT, dealerRouter);
 app.use("/login", loginRouter);
 
 module.exports = app;

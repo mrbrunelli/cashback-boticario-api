@@ -1,4 +1,6 @@
 const knex = require("../database/connection");
+const { generateJwtPayload } = require("../services/jwt-sign");
+const { isEmpty } = require("../services/is-empty");
 
 const loginController = () => {
   return {
@@ -6,19 +8,28 @@ const loginController = () => {
       try {
         const { email, password } = req.body;
         const dealer = await knex("dealer")
-          .select("email", "password")
+          .where("email", email)
+          .select("id", "name", "email", "password")
           .first();
+        if (!dealer) {
+          throw Error("E-mail or Password incorrectly.");
+        }
         if (email != dealer.email || password != dealer.password) {
           throw Error("E-mail or Password incorrectly.");
         }
-        return res.json("OK");
+        const token = generateJwtPayload(dealer.id, dealer.email);
+        return res.json({
+          name: dealer.name,
+          email: dealer.email,
+          token: token,
+        });
       } catch (e) {
         return res.status(400).json(e.message);
       }
-    }
+    },
   };
 };
 
 module.exports = {
-  loginController
-}
+  loginController,
+};
