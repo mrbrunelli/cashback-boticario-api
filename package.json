@@ -4,7 +4,12 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "dev": "nodemon ./bin/www",
+    "migrate:make": "npx knex migrate:make",
+    "migrate:latest": "npx knex migrate:latest",
+    "migrate:rollback": "npx knex migrate:rollback",
+    "seed:make": "npx knex seed:make",
+    "seed:run": "npx knex seed:run"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
