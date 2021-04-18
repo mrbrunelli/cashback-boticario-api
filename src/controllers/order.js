@@ -53,7 +53,7 @@ const orderController = () => {
           .first();
         const currentCashBackAmount = previusCashBackAmount.amount + cashBack;
         await trx("cashback")
-          .insert({
+          .update({
             amount: currentCashBackAmount,
             dealer_id,
           });
