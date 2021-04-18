@@ -1,6 +1,7 @@
 const knex = require("../database/connection");
 const { ok, badRequest } = require("../helpers/http");
 const { isValidDealer } = require("../services/dealer");
+const { encryptText } = require("../services/hash");
 
 const dealerController = () => {
   return {
@@ -25,7 +26,7 @@ const dealerController = () => {
             "d.name",
             "d.email",
             "d.cpf",
-            "c.amount as cashback_amount"
+            "c.amount as cashback_amount",
           )
           .first();
         if (!dealer) {
@@ -44,11 +45,12 @@ const dealerController = () => {
           throw Error("Invalid Dealer fields provided.");
         }
         const { name, email, cpf, password } = req.body;
-        const dealer = await trx("dealer")
-          .insert({ name, email, cpf, password })
+        const encryptedPassword = encryptText(password);
+        const dealerId = await trx("dealer")
+          .insert({ name, email, cpf, password: encryptedPassword })
           .returning();
         await trx("cashback")
-          .insert({ dealer_id: dealer[0] });
+          .insert({ dealer_id: dealerId[0] });
         await trx.commit();
         return ok(res, "Dealer Registered Successfully.");
       } catch (e) {
