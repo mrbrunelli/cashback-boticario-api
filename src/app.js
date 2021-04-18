@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/login", loginRouter);
-app.use("/dealer", verifyJWT, dealerRouter);
+app.use("/dealer", dealerRouter);
 app.use("/order", verifyJWT, orderRouter);
 app.use("*", notFoundRouter);
 

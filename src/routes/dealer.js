@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const { dealerController } = require("../controllers/dealer");
+const { verifyJWT } = require("../middlewares/auth");
 
-router.get("/", dealerController().index);
+router.get("/", verifyJWT, dealerController().index);
 router.post("/", dealerController().save);
 
 module.exports = router;
