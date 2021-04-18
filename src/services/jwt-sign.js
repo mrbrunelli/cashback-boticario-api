@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
  * @param {string} email - User E-mail
  */
 const generateJwtPayload = (id, email) => {
+  const minute = 60;
   const token = jwt.sign(
     {
       id,
@@ -13,7 +14,7 @@ const generateJwtPayload = (id, email) => {
     },
     process.env.JWT_SECRET,
     {
-      expiresIn: 300,
+      expiresIn: minute * 30,
     },
   );
   return token;
