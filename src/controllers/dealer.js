@@ -11,6 +11,32 @@ const dealerController = () => {
       return ok(res, dealers);
     },
 
+    show: async (req, res) => {
+      try {
+        const { id } = req.params;
+        if (!id) {
+          throw Error("Params not provided.");
+        }
+        const dealer = await knex("dealer as d")
+          .where("d.id", id)
+          .join("cashback as c", "c.dealer_id", "d.id")
+          .select(
+            "d.id",
+            "d.name",
+            "d.email",
+            "d.cpf",
+            "c.amount as cashback_amount"
+          )
+          .first();
+        if (!dealer) {
+          return badRequest(res, "Dealer Not Found.");
+        }
+        return ok(res, dealer);
+      } catch (e) {
+        return badRequest(res, e.message);
+      }
+    },
+
     save: async (req, res) => {
       const trx = await knex.transaction();
       try {
