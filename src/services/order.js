@@ -1,3 +1,5 @@
+const { isValidData } = require("./is-valid-data");
+
 /**
  * Example: 3% of 25 = 24.25
  * @param {number} amount - Amount value to calculate - Ex: 25
@@ -9,14 +11,9 @@ const calculateCashBack = (amount, percent) => {
 };
 
 /**
- * @param {object} order
- * @param {number} order.cod
- * @param {number} order.gloss_amount
- * @param {number} order.net_amount
- * @param {string} order.date
- * @param {number} order.dealer_id
+ * @param {object} receivedData
  */
-const isValidOrder = (order) => {
+const isValidOrder = (receivedData) => {
   const validOrder = [
     "cod",
     "gloss_amount",
@@ -24,7 +21,7 @@ const isValidOrder = (order) => {
     "date",
     "dealer_id",
   ];
-  return validOrder.every((key) => Object.keys(order).includes(key));
+  return isValidData(validOrder, receivedData);
 };
 
 module.exports = {
