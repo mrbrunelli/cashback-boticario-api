@@ -1,7 +1,7 @@
 const { isValidData } = require("./is-valid-data");
 
 /**
- * Example: 3% of 25 = 24.25
+ * Example: 3% of 25 = 24.25 = R$ 0.75 of CashBack
  * @param {number} amount - Amount value to calculate - Ex: 25
  * @param {number} percent - Percentage of CashBack - Ex: 3
  */
