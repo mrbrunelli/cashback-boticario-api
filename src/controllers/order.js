@@ -53,6 +53,7 @@ const orderController = () => {
           .first();
         const currentCashBackAmount = previusCashBackAmount.amount + cashBack;
         await trx("cashback")
+          .where("dealer_id", dealer_id)
           .update({
             amount: currentCashBackAmount,
             dealer_id,
