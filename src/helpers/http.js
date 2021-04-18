@@ -25,8 +25,17 @@ const notFound = (res) => {
   });
 };
 
+/**
+ * @param {Response} res
+ * @param {string} message
+ */
+const unauthorized = (res, message) => {
+  return res.status(401).json(message);
+};
+
 module.exports = {
   ok,
   badRequest,
   notFound,
+  unauthorized,
 };
