@@ -7,7 +7,7 @@ const { isValidData } = require("./is-valid-data");
  */
 const calculateCashBack = (amount, percent) => {
   const percentFormated = 1 - (percent / 100);
-  return amount * percentFormated;
+  return amount - (amount * percentFormated);
 };
 
 /**
