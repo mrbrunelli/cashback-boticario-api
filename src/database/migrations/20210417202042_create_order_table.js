@@ -5,16 +5,16 @@ exports.up = function (knex) {
     table.integer("cod").unique();
     table.float("gloss_amount").notNullable();
     table.float("net_amount").notNullable();
+    table.dateTime("date").notNullable().defaultTo(knex.fn.now());
     table.integer("dealer_id")
       .notNullable()
       .references("id")
       .inTable("dealer");
-    table.integer("order_id")
+    table.integer("order_status_id")
       .notNullable()
       .defaultTo(IN_VALIDATION)
       .references("id")
       .inTable("order_status");
-    table.dateTime("date").notNullable().defaultTo(knex.fn.now());
     table.timestamp("created_at").defaultTo(knex.fn.now());
     table.timestamp("updated_at").defaultTo(knex.fn.now());
   });
