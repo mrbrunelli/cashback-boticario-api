@@ -8,9 +8,17 @@ const loginController = () => {
     handle: async (req, res) => {
       try {
         const { email, password } = req.body;
-        const dealer = await knex("dealer")
-          .where("email", email)
-          .select("id", "name", "email", "password")
+        const dealer = await knex("dealer as d")
+          .where("d.email", email)
+          .join("cashback as c", "c.dealer_id", "d.id")
+          .select(
+            "d.id",
+            "d.name",
+            "d.cpf",
+            "d.email",
+            "d.password",
+            "c.amount as cashback_amount",
+          )
           .first();
         if (!dealer) {
           throw Error("E-mail or Password incorrectly.");
@@ -20,8 +28,11 @@ const loginController = () => {
         }
         const token = generateJwtPayload(dealer.id, dealer.email);
         return ok(res, {
+          id: dealer.id,
           name: dealer.name,
+          cpf: dealer.cpf,
           email: dealer.email,
+          cashback_amount: dealer.cashback_amount,
           token: token,
         });
       } catch (e) {
