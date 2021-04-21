@@ -36,7 +36,7 @@ const loginController = () => {
           token: token,
         });
       } catch (e) {
-        return badRequest(res, "Erro ao Realizar Login.");
+        return badRequest(res, e.message);
       }
     },
   };

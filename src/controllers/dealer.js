@@ -16,7 +16,7 @@ const dealerController = () => {
       try {
         const { id } = req.params;
         if (!id) {
-          throw Error("Params not provided.");
+          throw Error("Erro. ID não informado.");
         }
         const dealer = await knex("dealer as d")
           .where("d.id", id)
@@ -30,7 +30,7 @@ const dealerController = () => {
           )
           .first();
         if (!dealer) {
-          return badRequest(res, "Dealer Not Found.");
+          return badRequest(res, "Revendedor não encontrado.");
         }
         return ok(res, dealer);
       } catch (e) {
@@ -42,7 +42,7 @@ const dealerController = () => {
       const trx = await knex.transaction();
       try {
         if (!isValidDealer(req.body)) {
-          throw Error("Invalid Dealer fields provided.");
+          throw Error("Erro. Formato de dados inválidos.");
         }
         const { name, email, cpf, password } = req.body;
         const encryptedPassword = encryptText(password);
@@ -52,10 +52,10 @@ const dealerController = () => {
         await trx("cashback")
           .insert({ dealer_id: dealerId[0] });
         await trx.commit();
-        return ok(res, "Dealer Registered Successfully.");
+        return ok(res, "Revendedor Cadastrado com Sucesso!");
       } catch (e) {
         await trx.rollback();
-        return badRequest(res, "Erro ao realizar Cadastro. Verifique os dados.");
+        return badRequest(res, e.message);
       }
     },
   };

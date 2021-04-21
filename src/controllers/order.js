@@ -27,7 +27,7 @@ const orderController = () => {
         }
         return ok(res, orders);
       } catch (e) {
-        return badRequest(res, "Erro ao Carregar Pedidos.");
+        return badRequest(res, e.message);
       }
     },
 
@@ -62,7 +62,7 @@ const orderController = () => {
         return ok(res, "Order saved successfully.");
       } catch (e) {
         await trx.rollback();
-        return badRequest(res, "Erro ao Cadastrar novo Pedido.");
+        return badRequest(res, e.message);
       }
     },
   };
