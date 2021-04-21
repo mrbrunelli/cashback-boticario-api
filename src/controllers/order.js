@@ -8,7 +8,7 @@ const orderController = () => {
       try {
         const { dealer_id } = req.params;
         if (!dealer_id) {
-          throw Error("Dealer ID not provided");
+          throw Error("ID do Revendedor não recebido.");
         }
         const orders = await knex("order as o")
           .where("o.dealer_id", dealer_id)
@@ -23,11 +23,11 @@ const orderController = () => {
             "os.description as order_status_description",
           );
         if (!orders) {
-          throw Error("No Orders found.");
+          throw Error("Pedidos não encontrados.");
         }
         return ok(res, orders);
       } catch (e) {
-        return badRequest(res, e.message);
+        return badRequest(res, "Erro ao Carregar Pedidos.");
       }
     },
 
@@ -35,7 +35,7 @@ const orderController = () => {
       const trx = await knex.transaction();
       try {
         if (!isValidOrder(req.body)) {
-          throw Error("Invalid Order fields provided.");
+          throw Error("Erro. Formato de dados inválidos.");
         }
         const { cod, gloss_amount, net_amount, date, dealer_id } = req.body;
         const cashBack = calculateCashBack(net_amount, 3);
@@ -62,7 +62,7 @@ const orderController = () => {
         return ok(res, "Order saved successfully.");
       } catch (e) {
         await trx.rollback();
-        return badRequest(res, e.message);
+        return badRequest(res, "Erro ao Cadastrar novo Pedido.");
       }
     },
   };

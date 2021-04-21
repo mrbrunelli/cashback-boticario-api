@@ -34,7 +34,7 @@ const dealerController = () => {
         }
         return ok(res, dealer);
       } catch (e) {
-        return badRequest(res, e.message);
+        return badRequest(res, "Erro ao listar Revendedor.");
       }
     },
 
@@ -55,7 +55,7 @@ const dealerController = () => {
         return ok(res, "Dealer Registered Successfully.");
       } catch (e) {
         await trx.rollback();
-        return badRequest(res, e.message);
+        return badRequest(res, "Erro ao realizar Cadastro. Verifique os dados.");
       }
     },
   };

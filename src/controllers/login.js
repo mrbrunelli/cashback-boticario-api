@@ -21,10 +21,10 @@ const loginController = () => {
           )
           .first();
         if (!dealer) {
-          throw Error("E-mail or Password incorrectly.");
+          throw Error("E-mail ou Senha incorretos.");
         }
         if (email != dealer.email || !isEqual(password, dealer.password)) {
-          throw Error("E-mail or Password incorrectly.");
+          throw Error("E-mail ou Senha incorretos.");
         }
         const token = generateJwtPayload(dealer.id, dealer.email);
         return ok(res, {
@@ -36,7 +36,7 @@ const loginController = () => {
           token: token,
         });
       } catch (e) {
-        return badRequest(res, e.message);
+        return badRequest(res, "Erro ao Realizar Login.");
       }
     },
   };

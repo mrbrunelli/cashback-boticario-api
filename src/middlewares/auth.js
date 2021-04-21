@@ -9,7 +9,7 @@ const verifyJWT = (req, res, next) => {
   }
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
-      return unauthorized(res, "Invalid Token.");
+      return unauthorized(res, "Token Inválido. Faça Login novamente.");
     }
     return next();
   });
