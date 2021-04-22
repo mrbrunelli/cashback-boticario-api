@@ -59,7 +59,7 @@ const orderController = () => {
             dealer_id,
           });
         await trx.commit();
-        return ok(res, "Order saved successfully.");
+        return ok(res, "Pedido Cadastrado com Sucesso!");
       } catch (e) {
         await trx.rollback();
         return badRequest(res, e.message);
