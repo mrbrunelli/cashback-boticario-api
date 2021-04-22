@@ -5,7 +5,7 @@
 ##### Link para o Front-End aqui [mrbrunelli/cashback-boticario-web](https://github.com/mrbrunelli/cashback-boticario-web)
 
 ### Documentação API
-:link: [Link Documentação](https://github.com/mrbrunelli/cashback-boticario-api/blob/main/API_DOCS.md)
+:link: [Link Documentação](https://github.com/mrbrunelli/cashback-boticario-api/blob/master/API_DOCS.md)
 
 ### Requisitos
 - [x] Node 14^
